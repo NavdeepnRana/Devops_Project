@@ -66,6 +66,7 @@ const Home = () => {
                     </button>
                     <span className="createInfo">
                         If you don't have an invite then create &nbsp;
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a
                             href="#"
                             onClick={createNewRoom}

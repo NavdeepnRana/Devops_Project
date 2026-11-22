@@ -35,11 +35,13 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
             });
         }
         init();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        if (socketRef.current) {
-            socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
+        const currentSocket = socketRef.current;
+        if (currentSocket) {
+            currentSocket.on(ACTIONS.CODE_CHANGE, ({ code }) => {
                 if (code !== null) {
                     editorRef.current.setValue(code);
                 }
@@ -47,9 +49,11 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
         }
 
         return () => {
-            socketRef.current.off(ACTIONS.CODE_CHANGE);
+            if (currentSocket) {
+                currentSocket.off(ACTIONS.CODE_CHANGE);
+            }
         };
-    }, [socketRef.current]);
+    }, [socketRef]);
 
     return <textarea id="realtimeEditor"></textarea>;
 };

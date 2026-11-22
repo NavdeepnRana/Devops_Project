@@ -39,6 +39,8 @@ jobs:
         run: npm test
 
       - name: Build application
+        env:
+          CI: false
         run: npm run build
 
   docker-build-and-push:

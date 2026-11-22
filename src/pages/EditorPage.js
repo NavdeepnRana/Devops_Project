@@ -18,7 +18,6 @@ const EditorPage = () => {
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
-    const [dirty, setDirty] = useState(false);
 
     const saveToFile = () => {
         const blob = new Blob([codeRef.current], { type: 'text/plain' });
@@ -37,7 +36,6 @@ const EditorPage = () => {
         const shouldLeave = window.confirm('Do you want to leave? Any unsaved changes will be lost.');
 
         if (shouldLeave) {
-            setDirty(false);
             reactNavigator('/');
         }
     };
@@ -91,6 +89,7 @@ const EditorPage = () => {
                 socketRef.current.off(ACTIONS.DISCONNECTED);
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roomId, location.state?.username]);
 
     const copyRoomId = async () => {
