@@ -18,6 +18,7 @@ const EditorPage = () => {
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
+    const [dirty, setDirty] = useState(false);
 
     const saveToFile = () => {
         const blob = new Blob([codeRef.current], { type: 'text/plain' });
@@ -33,9 +34,13 @@ const EditorPage = () => {
     };
 
     const leaveRoom = () => {
-        const shouldLeave = window.confirm('Do you want to leave? Any unsaved changes will be lost.');
-
-        if (shouldLeave) {
+        if (dirty) {
+            const shouldLeave = window.confirm('Do you want to leave? Any unsaved changes will be lost.');
+            if (shouldLeave) {
+                setDirty(false);
+                reactNavigator('/');
+            }
+        } else {
             reactNavigator('/');
         }
     };
